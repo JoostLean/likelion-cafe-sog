@@ -1,0 +1,20 @@
+/* admin/menus/list.css — 메뉴 목록 페이지 */
+
+.data-table td .menu-name-cell {
+  display: flex;
+  flex-direction: column;
+}
+.data-table td .menu-name-cell strong { color: var(--color-espresso); }
+.data-table td .menu-name-cell small { color: var(--color-text-muted); }
+
+.data-table td .price-cell { font-weight: 600; color: var(--color-coffee); }
+
+.badge-list { display: inline-flex; gap: var(--space-1); flex-wrap: wrap; }
+.badge-mini {
+  font-size: 0.68rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--radius-full);
+  background: var(--color-cream);
+  color: var(--color-caramel);
+  font-weight: 600;
+}

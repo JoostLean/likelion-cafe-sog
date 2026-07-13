@@ -1,0 +1,78 @@
+/* admin/menus/create.css — 메뉴 추가 폼 (edit.css와 동일 구조 공유) */
+
+.form-card { max-width: 900px; }
+
+.form-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+/* ---------- 미리보기 ---------- */
+.form-preview {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-6));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+}
+.preview-thumb {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  background: linear-gradient(135deg, #f3e9dd, #c8a27c);
+  box-shadow: var(--shadow-md);
+  transition: var(--transition);
+}
+.preview-hint { font-size: var(--font-size-xs); }
+
+/* ---------- 필드 ---------- */
+.form-fields { display: flex; flex-direction: column; gap: var(--space-4); }
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+.req { color: var(--color-danger); }
+
+.field-error {
+  font-size: var(--font-size-xs);
+  color: var(--color-danger);
+  min-height: 1em;
+}
+.field-error:empty { display: none; }
+
+.input.invalid,
+.select.invalid {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px rgba(192, 80, 63, 0.12);
+}
+
+.check-field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 500;
+  cursor: pointer;
+}
+.check-field input { width: 18px; height: 18px; accent-color: var(--color-coffee); }
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+@media (max-width: 720px) {
+  .form-layout { grid-template-columns: 1fr; }
+  .form-preview { position: static; max-width: 200px; margin-inline: auto; }
+  .field-row { grid-template-columns: 1fr; }
+}
