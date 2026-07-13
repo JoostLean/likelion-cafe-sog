@@ -41,7 +41,7 @@
 
         header.innerHTML = `
           <a href="${root}index.html" class="brand">
-            <span class="logo">☕</span><span>SOG Cafe</span>
+            <span class="logo">☕</span><span>Cafe SOG</span>
           </a>
           <nav class="header-nav">${navLinks}</nav>
           <div class="header-actions">
@@ -75,7 +75,7 @@
           <div class="footer-inner">
             <div class="footer-top">
               <div class="footer-about">
-                <div class="footer-brand"><span>☕</span><span>SOG Cafe</span></div>
+                <div class="footer-brand"><span>☕</span><span>Cafe SOG</span></div>
                 <p class="footer-desc">
                   정성껏 내린 커피와 계절의 디저트로 하루의 쉼표를 만듭니다.
                   따뜻한 공간에서 좋은 시간 보내세요.
@@ -104,7 +104,7 @@
               </div>
             </div>
             <div class="footer-bottom">
-              <span>© 2026 SOG Cafe. All rights reserved.</span>
+              <span>© 2026 Cafe SOG. All rights reserved.</span>
               <span>Made with ☕ for BE26 likelion</span>
             </div>
           </div>`;

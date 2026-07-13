@@ -37,7 +37,7 @@
         sidebar.innerHTML = `
           <div class="admin-brand">
             <span class="logo">☕</span>
-            <span class="name">SOG Cafe<span class="sub">관리자</span></span>
+            <span class="name">Cafe SOG<span class="sub">관리자</span></span>
           </div>
           <nav class="admin-nav">${navHtml}</nav>
           <div class="admin-sidebar-footer">

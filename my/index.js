@@ -79,7 +79,7 @@
       <div class="login-card">
         <div class="login-emoji">👋</div>
         <h2>로그인이 필요해요</h2>
-        <p>이름을 입력하고 SOG Cafe를 시작하세요.<br />(데모용 간편 로그인)</p>
+        <p>이름을 입력하고 Cafe SOG를 시작하세요.<br />(데모용 간편 로그인)</p>
         <form class="login-form" id="loginForm">
           <input type="text" id="nameInput" class="input" placeholder="이름을 입력하세요" required />
           <div class="role-toggle" id="roleToggle">
