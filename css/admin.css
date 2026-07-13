@@ -173,11 +173,7 @@
 .chip:hover { border-color: var(--color-coffee); color: var(--color-coffee); }
 .chip.active { background: var(--color-coffee); border-color: var(--color-coffee); color: #fff; }
 
-/* ---------- 상태 배지 (주문) ---------- */
-.status-pending { background: var(--status-pending-bg); color: var(--status-pending-fg); }
-.status-progress { background: var(--status-progress-bg); color: var(--status-progress-fg); }
-.status-done { background: var(--status-done-bg); color: var(--status-done-fg); }
-.status-canceled { background: var(--status-canceled-bg); color: var(--status-canceled-fg); }
+/* 상태 배지(.status-*)는 variables.css 전역 정의 사용 */
 
 /* soldOut 배지 */
 .badge-soldout { background: #efe4d7; color: var(--color-text-muted); }
