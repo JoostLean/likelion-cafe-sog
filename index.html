@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SOG Cafe · 따뜻한 한 잔</title>
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/customer.css" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <header class="cust-header"></header>
+
+  <main class="container page">
+    <!-- 히어로 -->
+    <section class="hero">
+      <div class="hero-text">
+        <p class="hero-eyebrow">☕ SOG CAFE</p>
+        <h1 class="hero-title">오늘도<br />따뜻한 한 잔</h1>
+        <p class="hero-sub">정성껏 내린 커피와 달콤한 디저트를<br />간편하게 주문하세요.</p>
+        <a href="menus/list.html" class="btn btn-primary hero-cta">메뉴 주문하기 →</a>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <span class="hero-emoji">☕</span>
+      </div>
+    </section>
+
+    <!-- 카테고리 바로가기 -->
+    <section class="home-section">
+      <div class="section-head">
+        <h2>카테고리</h2>
+      </div>
+      <div id="categoryNav" class="category-nav"></div>
+    </section>
+
+    <!-- 추천 메뉴 -->
+    <section class="home-section">
+      <div class="section-head">
+        <h2>🔥 인기 메뉴</h2>
+        <a href="menus/list.html" class="section-more">전체보기 ›</a>
+      </div>
+      <div id="popularGrid" class="menu-grid"></div>
+    </section>
+
+    <!-- 신메뉴 -->
+    <section class="home-section">
+      <div class="section-head">
+        <h2>✨ 신메뉴</h2>
+        <a href="menus/list.html" class="section-more">전체보기 ›</a>
+      </div>
+      <div id="newGrid" class="menu-grid"></div>
+    </section>
+  </main>
+
+  <nav class="tabbar"></nav>
+
+  <script src="js/data.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/customer.js"></script>
+  <script src="js/menu-card.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>

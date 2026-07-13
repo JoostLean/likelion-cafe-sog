@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  const { Store, escapeHtml, toast } = window.CafeUtils;
+  const { Store, escapeHtml, getParam, toast } = window.CafeUtils;
   window.CustomerLayout.render({ active: "menus" });
 
   const grid = document.getElementById("menuGrid");
@@ -10,10 +10,15 @@
   const searchInput = document.getElementById("searchInput");
   const chipGroup = document.getElementById("categoryChips");
 
-  let activeCategory = "all";
-  let keyword = "";
-
   const categories = Store.getCategories();
+
+  // 메인 페이지 등에서 ?cat=... 로 진입 시 초기 카테고리 반영
+  const initialCat = getParam("cat");
+  let activeCategory =
+    initialCat && categories.some((c) => c.id === initialCat)
+      ? initialCat
+      : "all";
+  let keyword = "";
 
   function renderChips() {
     const chips = [{ id: "all", name: "전체" }, ...categories];
