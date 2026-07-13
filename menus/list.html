@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>메뉴 · SOG Cafe</title>
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/customer.css" />
+  <link rel="stylesheet" href="list.css" />
+</head>
+<body>
+  <header class="cust-header"></header>
+
+  <main class="container page">
+    <div class="page-heading">
+      <h1>메뉴</h1>
+      <p>따뜻한 한 잔을 골라보세요 ☕</p>
+    </div>
+
+    <div class="menu-filter">
+      <input
+        type="search"
+        id="searchInput"
+        class="input"
+        placeholder="메뉴 검색…"
+      />
+      <div class="chip-scroll">
+        <div class="chip-group" id="categoryChips"></div>
+      </div>
+    </div>
+
+    <div id="menuGrid" class="menu-grid"></div>
+
+    <div id="emptyState" class="empty-state hidden">
+      <div class="empty-icon">🍽️</div>
+      <p>조건에 맞는 메뉴가 없습니다.</p>
+    </div>
+  </main>
+
+  <nav class="tabbar"></nav>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/customer.js"></script>
+  <script src="../js/menu-card.js"></script>
+  <script src="list.js"></script>
+</body>
+</html>

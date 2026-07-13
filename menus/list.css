@@ -1,0 +1,26 @@
+/* menus/list.css — 고객 메뉴 목록 */
+
+.menu-filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+/* 카테고리 칩 가로 스크롤 (모바일) */
+.chip-scroll {
+  overflow-x: auto;
+  margin-inline: calc(-1 * var(--space-5));
+  padding-inline: var(--space-5);
+  scrollbar-width: none;
+}
+.chip-scroll::-webkit-scrollbar { display: none; }
+.chip-scroll .chip-group { flex-wrap: nowrap; }
+.chip-scroll .chip { white-space: nowrap; }
+
+/* 링크로 감싼 카드 내부 클릭 영역 */
+.menu-card .card-link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
