@@ -1,0 +1,56 @@
+/* orders/list.css — 고객 주문 내역 목록 */
+
+.order-list { display: flex; flex-direction: column; gap: var(--space-4); }
+
+.order-card {
+  display: block;
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+.order-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+}
+.order-card-head .order-date { font-size: var(--font-size-sm); color: var(--color-text-muted); }
+
+.order-card-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+.order-thumbs { display: flex; }
+.order-thumbs .mini-thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  border: 2px solid var(--color-surface);
+  margin-left: -10px;
+}
+.order-thumbs .mini-thumb:first-child { margin-left: 0; }
+.order-summary-text { font-size: var(--font-size-sm); color: var(--color-text); }
+.order-summary-text .more { color: var(--color-text-muted); }
+
+.order-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+.order-card-foot .order-total { font-weight: 700; }
+.order-card-foot .order-total b { color: var(--color-coffee); font-size: var(--font-size-lg); }
+.order-card-foot .view-link { font-size: var(--font-size-sm); color: var(--color-coffee); font-weight: 600; }

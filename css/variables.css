@@ -265,6 +265,12 @@ h1, h2, h3, h4 {
   user-select: none;
 }
 
+/* ---------- 주문 상태 배지 (전역: 고객/관리자 공유) ---------- */
+.status-pending { background: var(--status-pending-bg); color: var(--status-pending-fg); }
+.status-progress { background: var(--status-progress-bg); color: var(--status-progress-fg); }
+.status-done { background: var(--status-done-bg); color: var(--status-done-fg); }
+.status-canceled { background: var(--status-canceled-bg); color: var(--status-canceled-fg); }
+
 /* ---------- 헬퍼 ---------- */
 .text-muted { color: var(--color-text-muted); }
 .text-center { text-align: center; }

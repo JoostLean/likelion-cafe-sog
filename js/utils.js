@@ -117,6 +117,12 @@
     canceled: { label: "취소", className: "status-canceled" },
   };
 
+  /* 상태 배지 HTML (고객/관리자 공유) */
+  function statusBadge(status) {
+    const s = ORDER_STATUS[status] || ORDER_STATUS.pending;
+    return `<span class="badge ${s.className}">${s.label}</span>`;
+  }
+
   /* ============================================================
      Store — 데이터 접근 계층 (추후 Supabase로 교체 지점)
      ============================================================ */
@@ -313,6 +319,7 @@
     Store,
     Auth,
     ORDER_STATUS,
+    statusBadge,
     formatPrice,
     formatDate,
     genId,

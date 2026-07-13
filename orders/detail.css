@@ -1,0 +1,109 @@
+/* orders/detail.css — 고객 주문 상세 */
+
+.back-link {
+  display: inline-block;
+  margin-bottom: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+.back-link:hover { color: var(--color-coffee); }
+
+/* ---------- 상태 배너 ---------- */
+.order-status-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-4);
+}
+.order-status-banner .status-emoji { font-size: 2.6rem; }
+.order-status-banner .status-text { flex: 1; }
+.order-status-banner .status-text h2 { font-size: var(--font-size-xl); }
+.order-status-banner .status-text p { font-size: var(--font-size-sm); color: var(--color-text-muted); }
+
+/* ---------- 진행 단계 ---------- */
+.status-steps {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+.status-step {
+  flex: 1;
+  text-align: center;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+.status-step .dot {
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-border);
+  margin-bottom: var(--space-2);
+  transition: var(--transition);
+}
+.status-step.reached .dot { background: var(--color-coffee); }
+.status-step.reached { color: var(--color-coffee); font-weight: 600; }
+.status-steps.is-canceled .status-step .dot { background: var(--color-danger); }
+.status-steps.is-canceled .status-step { color: var(--color-danger); }
+
+/* ---------- 섹션 카드 ---------- */
+.order-section {
+  padding: var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-4);
+}
+.order-section h3 {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-4);
+  color: var(--color-text-muted);
+}
+
+.order-item-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.order-item-row:last-child { border-bottom: none; }
+.order-item-row .row-thumb {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--color-cream);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+.order-item-row .row-info { flex: 1; }
+.order-item-row .row-name { font-weight: 600; }
+.order-item-row .row-qty { font-size: var(--font-size-sm); color: var(--color-text-muted); }
+.order-item-row .row-price { font-weight: 700; color: var(--color-coffee); }
+
+.order-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: var(--space-4);
+  margin-top: var(--space-2);
+  border-top: 2px solid var(--color-border);
+  font-weight: 700;
+}
+.order-total-row .total-value { font-size: var(--font-size-xl); color: var(--color-coffee); }
+
+.order-memo { color: var(--color-text); line-height: 1.6; }
+.order-meta-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-2) 0;
+  font-size: var(--font-size-sm);
+}
+.order-meta-row .label { color: var(--color-text-muted); }
+
+.order-actions { display: flex; gap: var(--space-3); margin-top: var(--space-2); }
