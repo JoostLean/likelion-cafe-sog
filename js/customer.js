@@ -19,11 +19,11 @@
   ];
 
   const CustomerLayout = {
-    render({ active = "" } = {}) {
+    async render({ active = "" } = {}) {
       const root = rootPath();
       document.body.classList.add("customer");
 
-      const cartCount = Store.cartCount();
+      const cartCount = await Store.cartCount();
 
       /* ---------- 헤더 (브랜드 + PC 가로 네비 + 장바구니) ---------- */
       const header = document.querySelector(".cust-header");
@@ -112,8 +112,8 @@
     },
 
     /* 장바구니 담기 후 헤더/탭바 배지 갱신 */
-    refreshCartBadge() {
-      const count = Store.cartCount();
+    async refreshCartBadge() {
+      const count = await Store.cartCount();
 
       // 헤더 우측 장바구니 아이콘 배지
       const headerBadge = document.querySelector(".cart-count");

@@ -12,7 +12,6 @@
     toast,
     ORDER_STATUS,
   } = window.CafeUtils;
-  window.AdminLayout.render({ active: "orders", title: "주문 상세" });
 
   const root = document.getElementById("detailRoot");
   const id = getParam("id");
@@ -24,8 +23,8 @@
     canceled: "🚫",
   };
 
-  function render() {
-    const order = id ? Store.getOrder(id) : null;
+  async function render() {
+    const order = id ? await Store.getOrder(id) : null;
 
     if (!order) {
       root.innerHTML = `
@@ -104,16 +103,25 @@
   }
 
   /* 상태 변경 (이벤트 위임) */
-  root.addEventListener("click", (e) => {
+  root.addEventListener("click", async (e) => {
     const btn = e.target.closest(".js-status");
     if (!btn) return;
     const newStatus = btn.dataset.status;
-    const order = Store.getOrder(id);
+    const order = await Store.getOrder(id);
     if (!order || order.status === newStatus) return;
-    Store.updateOrderStatus(id, newStatus);
+    try {
+      await Store.updateOrderStatus(id, newStatus);
+    } catch (err) {
+      toast("상태 변경에 실패했습니다.");
+      return;
+    }
     toast(`상태를 '${ORDER_STATUS[newStatus].label}'(으)로 변경했습니다.`);
-    render();
+    await render();
   });
 
-  render();
+  (async function init() {
+    const ok = await window.AdminLayout.render({ active: "orders", title: "주문 상세" });
+    if (!ok) return;
+    await render();
+  })();
 })();

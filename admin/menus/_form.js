@@ -19,10 +19,11 @@
   const MenuForm = {
     GRADIENTS,
 
-    /* select 옵션 채우기 */
-    populateSelects(form) {
+    /* select 옵션 채우기 (async — 카테고리를 Supabase에서 로드) */
+    async populateSelects(form) {
       const catSel = form.querySelector("#categoryId");
-      catSel.innerHTML = Store.getCategories()
+      const categories = await Store.getCategories();
+      catSel.innerHTML = categories
         .map((c) => `<option value="${c.id}">${escapeHtml(c.emoji + " " + c.name)}</option>`)
         .join("");
 

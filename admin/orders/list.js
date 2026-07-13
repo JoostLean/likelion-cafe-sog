@@ -4,20 +4,19 @@
 
   const { Store, formatPrice, formatDate, statusBadge, escapeHtml, ORDER_STATUS, toast } =
     window.CafeUtils;
-  window.AdminLayout.render({ active: "orders", title: "주문 관리" });
 
   const tbody = document.getElementById("orderTableBody");
   const emptyState = document.getElementById("emptyState");
   const chipGroup = document.getElementById("statusChips");
 
   let activeStatus = "all";
+  let allOrders = []; // 인메모리 보관
 
   /* ---------- 상태 필터 칩 (건수 포함) ---------- */
   function renderChips() {
-    const orders = Store.getOrders();
-    const counts = { all: orders.length };
+    const counts = { all: allOrders.length };
     Object.keys(ORDER_STATUS).forEach((k) => {
-      counts[k] = orders.filter((o) => o.status === k).length;
+      counts[k] = allOrders.filter((o) => o.status === k).length;
     });
 
     const chips = [
@@ -38,7 +37,7 @@
 
   /* ---------- 테이블 ---------- */
   function renderTable() {
-    let orders = Store.getOrders();
+    let orders = allOrders;
     if (activeStatus !== "all") {
       orders = orders.filter((o) => o.status === activeStatus);
     }
@@ -54,10 +53,11 @@
       .map((o) => {
         const first = o.items[0];
         const rest = o.items.length - 1;
-        const menuSummary =
-          rest > 0
-            ? `${escapeHtml(first.name)} <span class="more">외 ${rest}건</span>`
-            : escapeHtml(first.name);
+        const menuSummary = !first
+          ? "-"
+          : rest > 0
+          ? `${escapeHtml(first.name)} <span class="more">외 ${rest}건</span>`
+          : escapeHtml(first.name);
 
         const options = Object.keys(ORDER_STATUS)
           .map(
@@ -94,17 +94,31 @@
     renderTable();
   });
 
-  tbody.addEventListener("change", (e) => {
+  tbody.addEventListener("change", async (e) => {
     const sel = e.target.closest(".js-status");
     if (!sel) return;
     const id = e.target.closest("tr").dataset.id;
-    Store.updateOrderStatus(id, sel.value);
+    try {
+      await Store.updateOrderStatus(id, sel.value);
+    } catch (err) {
+      toast("상태 변경에 실패했습니다.");
+      return;
+    }
+    // 인메모리 상태 갱신
+    const target = allOrders.find((o) => o.id === id);
+    if (target) target.status = sel.value;
     toast(`주문 상태를 '${ORDER_STATUS[sel.value].label}'(으)로 변경했습니다.`);
     renderChips();
     renderTable();
   });
 
   /* ---------- 초기 렌더 ---------- */
-  renderChips();
-  renderTable();
+  (async function init() {
+    const ok = await window.AdminLayout.render({ active: "orders", title: "주문 관리" });
+    if (!ok) return;
+
+    allOrders = await Store.getOrders();
+    renderChips();
+    renderTable();
+  })();
 })();

@@ -15,15 +15,25 @@
   ];
 
   const AdminLayout = {
-    /* active: NAV의 key, title: 헤더 페이지 제목 */
-    render({ active = "", title = "" } = {}) {
+    /* active: NAV의 key, title: 헤더 페이지 제목
+       반환: 관리자 인증 통과 시 true, 아니면 false(리다이렉트됨) */
+    async render({ active = "", title = "" } = {}) {
       const root = rootPath();
 
-      // 관리자 로그인 보장 (가짜 로그인) — 데모 편의를 위해 자동 관리자 세션
-      if (!Auth.isAdmin()) {
-        Auth.login("사장님", "admin");
+      // 실제 관리자 권한 검사 (profiles.role === 'admin')
+      const profile = await Auth.currentProfile();
+      if (!profile) {
+        // 미로그인 → 로그인 페이지로
+        alert("관리자 로그인이 필요합니다.");
+        location.href = `${root}my/index.html`;
+        return false;
       }
-      const user = Auth.current();
+      if (profile.role !== "admin") {
+        alert("관리자 권한이 없습니다.");
+        location.href = `${root}index.html`;
+        return false;
+      }
+      const user = profile;
 
       const navHtml = NAV.map((item) => {
         const isActive = item.key === active ? " active" : "";
@@ -53,6 +63,7 @@
             <span class="admin-user">👤 ${user ? user.name : "관리자"}</span>
           </div>`;
       }
+      return true;
     },
   };
 

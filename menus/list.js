@@ -2,22 +2,17 @@
 (function () {
   "use strict";
 
-  const { Store, escapeHtml, getParam, toast } = window.CafeUtils;
-  window.CustomerLayout.render({ active: "menus" });
+  const { Store, Auth, escapeHtml, getParam, toast, rootPath } = window.CafeUtils;
 
   const grid = document.getElementById("menuGrid");
   const emptyState = document.getElementById("emptyState");
   const searchInput = document.getElementById("searchInput");
   const chipGroup = document.getElementById("categoryChips");
+  const root = rootPath();
 
-  const categories = Store.getCategories();
-
-  // 메인 페이지 등에서 ?cat=... 로 진입 시 초기 카테고리 반영
-  const initialCat = getParam("cat");
-  let activeCategory =
-    initialCat && categories.some((c) => c.id === initialCat)
-      ? initialCat
-      : "all";
+  let categories = [];
+  let allMenus = []; // 한 번만 로드 후 인메모리 필터
+  let activeCategory = "all";
   let keyword = "";
 
   function renderChips() {
@@ -31,7 +26,7 @@
   }
 
   function renderMenus() {
-    let menus = Store.getMenus();
+    let menus = allMenus;
 
     if (activeCategory !== "all")
       menus = menus.filter((m) => m.categoryId === activeCategory);
@@ -53,6 +48,24 @@
     window.MenuCard.renderInto(grid, menus);
   }
 
+  (async function init() {
+    await window.CustomerLayout.render({ active: "menus" });
+
+    [categories, allMenus] = await Promise.all([
+      Store.getCategories(),
+      Store.getMenus(),
+    ]);
+
+    // 메인 페이지 등에서 ?cat=... 로 진입 시 초기 카테고리 반영
+    const initialCat = getParam("cat");
+    if (initialCat && categories.some((c) => c.id === initialCat)) {
+      activeCategory = initialCat;
+    }
+
+    renderChips();
+    renderMenus();
+  })();
+
   /* ---------- 이벤트 ---------- */
   chipGroup.addEventListener("click", (e) => {
     const btn = e.target.closest(".chip");
@@ -68,18 +81,19 @@
   });
 
   /* 장바구니 담기 (이벤트 위임) */
-  grid.addEventListener("click", (e) => {
+  grid.addEventListener("click", async (e) => {
     const btn = e.target.closest(".js-add");
     if (!btn) return;
     e.preventDefault();
-    const menu = Store.getMenu(btn.dataset.id);
+    const menu = allMenus.find((m) => m.id === btn.dataset.id);
     if (!menu || menu.soldOut) return;
-    Store.addToCart(menu.id, 1);
-    window.CustomerLayout.refreshCartBadge();
+    if (!(await Auth.isLoggedIn())) {
+      toast("로그인 후 이용해주세요.");
+      setTimeout(() => (location.href = `${root}my/index.html`), 800);
+      return;
+    }
+    await Store.addToCart(menu.id, 1);
+    await window.CustomerLayout.refreshCartBadge();
     toast(`'${menu.name}' 장바구니에 담았습니다.`);
   });
-
-  /* ---------- 초기 렌더 ---------- */
-  renderChips();
-  renderMenus();
 })();

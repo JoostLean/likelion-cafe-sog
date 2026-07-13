@@ -3,12 +3,17 @@
   "use strict";
 
   const { Store, formatPrice, statusBadge, escapeHtml } = window.CafeUtils;
-  window.AdminLayout.render({ active: "dashboard", title: "대시보드" });
 
-  const orders = Store.getOrders();
-  const menus = Store.getMenus();
+  (async function init() {
+    const ok = await window.AdminLayout.render({ active: "dashboard", title: "대시보드" });
+    if (!ok) return;
 
-  /* ---------- 통계 계산 ---------- */
+    const [orders, menus] = await Promise.all([
+      Store.getOrders(),
+      Store.getMenus(),
+    ]);
+
+    /* ---------- 통계 계산 ---------- */
   const activeOrders = orders.filter((o) => o.status !== "canceled");
   const totalRevenue = activeOrders.reduce((s, o) => s + o.total, 0);
   const pendingCount = orders.filter(
@@ -86,5 +91,6 @@
         </li>`
       )
       .join("");
-  }
+    }
+  })();
 })();
