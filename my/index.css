@@ -1,0 +1,107 @@
+/* my/index.css — 고객 마이페이지 */
+
+/* ---------- 프로필 카드 ---------- */
+.profile-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 90% 10%, rgba(176, 125, 82, 0.18), transparent 55%),
+    linear-gradient(135deg, var(--color-cream), var(--color-cream-soft));
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-5);
+}
+.profile-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: linear-gradient(135deg, #fff, var(--color-latte));
+  box-shadow: var(--shadow-sm);
+  flex-shrink: 0;
+}
+.profile-info { flex: 1; min-width: 0; }
+.profile-info .greeting { font-size: var(--font-size-xl); font-weight: 700; color: var(--color-espresso); }
+.profile-info .role { font-size: var(--font-size-sm); color: var(--color-text-muted); }
+.profile-info .role .role-badge {
+  display: inline-block;
+  margin-left: var(--space-2);
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  background: var(--color-coffee);
+  color: #fff;
+}
+
+/* ---------- 통계 ---------- */
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+.stat-card {
+  text-align: center;
+  padding: var(--space-5) var(--space-3);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+.stat-card .stat-value { font-size: var(--font-size-2xl); font-weight: 700; color: var(--color-coffee); }
+.stat-card .stat-label { font-size: var(--font-size-xs); color: var(--color-text-muted); margin-top: var(--space-1); }
+
+/* ---------- 메뉴 링크 리스트 ---------- */
+.menu-links {
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  margin-bottom: var(--space-5);
+}
+.menu-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  transition: var(--transition);
+}
+.menu-link:last-child { border-bottom: none; }
+.menu-link:hover { background: var(--color-cream-soft); }
+.menu-link .link-ico { font-size: 1.3rem; width: 1.6rem; text-align: center; }
+.menu-link .link-label { flex: 1; font-weight: 500; }
+.menu-link .link-arrow { color: var(--color-text-muted); }
+
+/* ---------- 로그인 폼 ---------- */
+.login-card {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  margin-bottom: var(--space-5);
+}
+.login-card .login-emoji { font-size: 3rem; margin-bottom: var(--space-3); }
+.login-card h2 { font-size: var(--font-size-lg); margin-bottom: var(--space-2); }
+.login-card p { color: var(--color-text-muted); font-size: var(--font-size-sm); margin-bottom: var(--space-5); }
+.login-form { display: flex; flex-direction: column; gap: var(--space-3); max-width: 320px; margin-inline: auto; }
+.role-toggle { display: flex; gap: var(--space-2); }
+.role-toggle .chip { flex: 1; text-align: center; }
+
+.logout-btn { display: block; margin: 0 auto; }
+
+@media (max-width: 480px) {
+  .stat-grid { grid-template-columns: repeat(3, 1fr); gap: var(--space-2); }
+  .stat-card { padding: var(--space-4) var(--space-2); }
+  .stat-card .stat-value { font-size: var(--font-size-xl); }
+}
