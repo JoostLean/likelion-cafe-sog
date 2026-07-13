@@ -11,6 +11,7 @@
     getParam,
     toast,
     ORDER_STATUS,
+    rootPath,
   } = window.CafeUtils;
   window.CustomerLayout.render({ active: "orders" });
 
@@ -52,18 +53,26 @@
         </div>`;
     }).join("");
 
+    const root2 = rootPath();
     const itemsHtml = order.items
-      .map(
-        (it) => `
+      .map((it) => {
+        const imageSrc = it.imageUrl ? `${root2}${it.imageUrl}` : "";
+        const photo = imageSrc
+          ? `<img src="${imageSrc}" alt="" class="row-thumb-photo" onerror="this.style.display='none'; this.parentElement.classList.add('img-fallback');" />`
+          : "";
+        return `
         <div class="order-item-row">
-          <div class="row-thumb">${it.emoji}</div>
+          <div class="row-thumb${imageSrc ? "" : " no-photo"}">
+            ${photo}
+            <span class="row-thumb-emoji-fallback">${it.emoji}</span>
+          </div>
           <div class="row-info">
             <div class="row-name">${escapeHtml(it.name)}</div>
             <div class="row-qty">${formatPrice(it.price)} × ${it.qty}</div>
           </div>
           <div class="row-price">${formatPrice(it.price * it.qty)}</div>
-        </div>`
-      )
+        </div>`;
+      })
       .join("");
 
     const canCancel = order.status === "pending";

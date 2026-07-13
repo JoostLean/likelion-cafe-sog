@@ -2,34 +2,47 @@
 
 .basket-layout {
   display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: var(--space-6);
+  grid-template-columns: 1fr 380px;
+  gap: var(--space-8);
   align-items: start;
 }
 
 /* ---------- 담긴 항목 리스트 ---------- */
-.basket-items { display: flex; flex-direction: column; gap: var(--space-3); }
+.basket-items { display: flex; flex-direction: column; gap: var(--space-4); }
 
 .basket-item {
   display: grid;
-  grid-template-columns: 64px 1fr auto;
-  gap: var(--space-4);
+  grid-template-columns: 72px 1fr auto;
+  gap: var(--space-5);
   align-items: center;
-  padding: var(--space-4);
+  padding: var(--space-5);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
 }
 .basket-item .item-thumb {
-  width: 64px;
-  height: 64px;
-  border-radius: var(--radius-sm);
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 2rem;
+  font-size: 2.2rem;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
 }
+.basket-item .item-thumb .thumb-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.basket-item .item-thumb .thumb-emoji-fallback { display: none; }
+.basket-item .item-thumb.img-fallback .thumb-emoji-fallback,
+.basket-item .item-thumb.no-photo .thumb-emoji-fallback { display: block; position: relative; z-index: 0; }
 .basket-item .item-info { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .basket-item .item-name { font-weight: 700; color: var(--color-espresso); }
 .basket-item .item-price { font-size: var(--font-size-sm); color: var(--color-text-muted); }
@@ -70,8 +83,8 @@
 /* ---------- 주문 요약 (사이드) ---------- */
 .basket-summary {
   position: sticky;
-  top: calc(var(--header-height) + var(--space-5));
-  padding: var(--space-5);
+  top: calc(var(--header-height) + var(--space-6));
+  padding: var(--space-6);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -107,7 +120,7 @@
 }
 .clear-cart-btn:hover { color: var(--color-danger); }
 
-@media (max-width: 720px) {
+@media (max-width: 767px) {
   .basket-layout { grid-template-columns: 1fr; }
   .basket-summary { position: static; }
   .basket-item { grid-template-columns: 56px 1fr; }

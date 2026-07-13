@@ -148,6 +148,7 @@
         description: data.description || "",
         price: Number(data.price) || 0,
         emoji: data.emoji || "☕",
+        imageUrl: data.imageUrl || "",
         gradient:
           data.gradient || "linear-gradient(135deg, #f3e9dd, #c8a27c)",
         badges: data.badges || [],
@@ -242,6 +243,7 @@
           menuId: d.menu.id,
           name: d.menu.name,
           emoji: d.menu.emoji,
+          imageUrl: d.menu.imageUrl,
           price: d.menu.price,
           qty: d.qty,
         })),

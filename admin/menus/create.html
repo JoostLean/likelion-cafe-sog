@@ -27,7 +27,7 @@
               <!-- 미리보기 -->
               <div class="form-preview">
                 <div class="preview-thumb" id="previewThumb">☕</div>
-                <p class="preview-hint text-muted">이모지 · 그라디언트 미리보기</p>
+                <p class="preview-hint text-muted">이미지 URL 입력 시 이미지, 없으면 이모지·그라디언트 표시</p>
               </div>
 
               <!-- 입력 필드 -->
@@ -55,9 +55,14 @@
                   <textarea id="description" name="description" class="textarea" placeholder="메뉴 설명을 입력하세요."></textarea>
                 </div>
 
+                <div class="field">
+                  <label for="imageUrl">메뉴 이미지 URL</label>
+                  <input type="text" id="imageUrl" name="imageUrl" class="input" placeholder="assets/menus/m-001.jpg 또는 https://…" />
+                </div>
+
                 <div class="field-row">
                   <div class="field">
-                    <label for="emoji">이모지</label>
+                    <label for="emoji">이모지 (이미지 없을 때 대체)</label>
                     <input type="text" id="emoji" name="emoji" class="input" maxlength="4" placeholder="☕" />
                   </div>
                   <div class="field">

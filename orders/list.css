@@ -1,17 +1,17 @@
 /* orders/list.css — 고객 주문 내역 목록 */
 
-.order-list { display: flex; flex-direction: column; gap: var(--space-4); }
+.order-list { display: flex; flex-direction: column; gap: var(--space-5); }
 
 .order-card {
   display: block;
-  padding: var(--space-5);
+  padding: var(--space-6);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  transition: transform var(--transition), box-shadow var(--transition);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.order-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.order-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
 
 .order-card-head {
   display: flex;
@@ -39,8 +39,20 @@
   font-size: 1.2rem;
   border: 2px solid var(--color-surface);
   margin-left: -10px;
+  position: relative;
+  overflow: hidden;
 }
 .order-thumbs .mini-thumb:first-child { margin-left: 0; }
+.order-thumbs .mini-thumb .mini-thumb-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.order-thumbs .mini-thumb .mini-thumb-emoji-fallback { display: none; }
+.order-thumbs .mini-thumb.img-fallback .mini-thumb-emoji-fallback,
+.order-thumbs .mini-thumb.no-photo .mini-thumb-emoji-fallback { display: block; position: relative; z-index: 0; }
 .order-summary-text { font-size: var(--font-size-sm); color: var(--color-text); }
 .order-summary-text .more { color: var(--color-text-muted); }
 
@@ -54,3 +66,12 @@
 .order-card-foot .order-total { font-weight: 700; }
 .order-card-foot .order-total b { color: var(--color-coffee); font-size: var(--font-size-lg); }
 .order-card-foot .view-link { font-size: var(--font-size-sm); color: var(--color-coffee); font-weight: 600; }
+
+/* ---------- PC 레이아웃 (≥768px): 주문 카드 2단 그리드 ---------- */
+@media (min-width: 768px) {
+  .order-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+}

@@ -32,7 +32,7 @@
 }
 .admin-brand .logo { font-size: 1.6rem; }
 .admin-brand .name { font-weight: 700; font-size: var(--font-size-lg); color: #fff; }
-.admin-brand .sub { display: block; font-size: var(--font-size-xs); color: var(--color-latte); font-weight: 400; }
+.admin-brand .sub { display: block; font-family: var(--font-sans); font-size: var(--font-size-xs); color: var(--color-latte); font-weight: 400; }
 
 .admin-nav { display: flex; flex-direction: column; gap: var(--space-1); flex: 1; }
 .admin-nav a {
@@ -92,7 +92,7 @@
 .admin-header .header-actions { display: flex; align-items: center; gap: var(--space-3); }
 .admin-header .admin-user { display: flex; align-items: center; gap: var(--space-2); font-size: var(--font-size-sm); color: var(--color-text-muted); }
 
-.admin-content { padding: var(--space-6); flex: 1; }
+.admin-content { padding: var(--space-8); flex: 1; }
 
 /* ---------- 페이지 상단 바 (breadcrumb / 액션) ---------- */
 .admin-toolbar {
@@ -148,7 +148,19 @@
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
+  position: relative;
+  overflow: hidden;
 }
+.table-thumb .table-thumb-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.table-thumb .table-thumb-emoji-fallback { display: none; }
+.table-thumb.img-fallback .table-thumb-emoji-fallback,
+.table-thumb.no-photo .table-thumb-emoji-fallback { display: block; position: relative; z-index: 0; }
 
 /* ---------- 필터 바 ---------- */
 .filter-bar {
@@ -159,19 +171,7 @@
   margin-bottom: var(--space-5);
 }
 .filter-bar .search-input { flex: 1; min-width: 200px; }
-.chip-group { display: flex; gap: var(--space-2); flex-wrap: wrap; }
-.chip {
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-full);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  color: var(--color-text-muted);
-  transition: var(--transition);
-}
-.chip:hover { border-color: var(--color-coffee); color: var(--color-coffee); }
-.chip.active { background: var(--color-coffee); border-color: var(--color-coffee); color: #fff; }
+/* .chip / .chip-group 공통 스타일은 variables.css 전역 정의 사용 */
 
 /* 상태 배지(.status-*)는 variables.css 전역 정의 사용 */
 

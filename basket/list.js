@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  const { Store, formatPrice, escapeHtml, toast } = window.CafeUtils;
+  const { Store, formatPrice, escapeHtml, toast, rootPath } = window.CafeUtils;
   window.CustomerLayout.render({ active: "basket" });
 
   const root = document.getElementById("basketRoot");
@@ -22,11 +22,19 @@
 
     const total = Store.cartTotal();
 
+    const root2 = rootPath();
     const itemsHtml = items
-      .map(
-        (it) => `
+      .map((it) => {
+        const imageSrc = it.menu.imageUrl ? `${root2}${it.menu.imageUrl}` : "";
+        const thumbInner = imageSrc
+          ? `<img src="${imageSrc}" alt="${escapeHtml(it.menu.name)}" class="thumb-photo" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('img-fallback');" />`
+          : "";
+        return `
         <div class="basket-item" data-id="${it.menuId}">
-          <div class="item-thumb" style="background:${it.menu.gradient}">${it.menu.emoji}</div>
+          <div class="item-thumb${imageSrc ? "" : " no-photo"}" style="background:${it.menu.gradient}">
+            ${thumbInner}
+            <span class="thumb-emoji-fallback">${it.menu.emoji}</span>
+          </div>
           <div class="item-info">
             <span class="item-name">${escapeHtml(it.menu.name)}</span>
             <span class="item-price">${formatPrice(it.menu.price)}</span>
@@ -40,8 +48,8 @@
             </div>
             <button type="button" class="item-remove js-remove">삭제</button>
           </div>
-        </div>`
-      )
+        </div>`;
+      })
       .join("");
 
     root.innerHTML = `

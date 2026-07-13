@@ -34,6 +34,38 @@ body.customer {
 .cust-header .brand .logo { font-size: 1.5rem; }
 .cust-header .header-actions { display: flex; align-items: center; gap: var(--space-2); }
 
+/* ---------- 헤더 가로 네비 (PC 전용, 모바일에선 숨김) ---------- */
+.header-nav { display: none; }
+.header-nav .nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  transition: var(--transition);
+}
+.header-nav .nav-link .nav-ico { font-size: 1.05rem; }
+.header-nav .nav-link:hover { background: var(--color-cream); color: var(--color-coffee); }
+.header-nav .nav-link.active { background: var(--color-coffee); color: #fff; }
+.header-nav .nav-badge {
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: var(--radius-full);
+  background: var(--color-danger);
+  color: #fff;
+  font-size: 0.65rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-nav .nav-link.active .nav-badge { background: var(--color-espresso); }
+
 /* 장바구니 아이콘 버튼 (배지 포함) */
 .cart-btn {
   position: relative;
@@ -117,18 +149,18 @@ body.customer {
 .tabbar .tab-item { position: relative; flex: 1; display: flex; }
 
 /* ---------- 페이지 공통 ---------- */
-.page { padding: var(--space-5) 0 var(--space-8); }
+.page { padding: var(--space-8) 0 var(--space-10); }
 .page-heading {
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-8);
 }
-.page-heading h1 { font-size: var(--font-size-2xl); }
+.page-heading h1 { font-size: var(--font-size-3xl); }
 .page-heading p { color: var(--color-text-muted); font-size: var(--font-size-sm); }
 
 /* ---------- 메뉴 카드 (목록에서 공유) ---------- */
 .menu-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-5);
 }
 .menu-card {
   display: flex;
@@ -138,10 +170,10 @@ body.customer {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   box-shadow: var(--shadow-sm);
-  transition: transform var(--transition), box-shadow var(--transition);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
   position: relative;
 }
-.menu-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.menu-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
 .menu-card.is-soldout { opacity: 0.72; }
 
 .menu-card .card-thumb {
@@ -151,7 +183,20 @@ body.customer {
   justify-content: center;
   font-size: 3.2rem;
   position: relative;
+  overflow: hidden;
 }
+.menu-card .card-thumb .card-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+.menu-card:hover .card-thumb .card-photo { transform: scale(1.05); }
+/* 이미지가 있으면 이모지는 숨김. 이미지 로드 실패(.img-fallback) 시에만 이모지 표시 */
+.menu-card .card-thumb .card-emoji-fallback { display: none; }
+.menu-card .card-thumb.img-fallback .card-emoji-fallback { display: block; position: relative; z-index: 0; }
 .menu-card .card-thumb .soldout-overlay {
   position: absolute;
   inset: 0;
@@ -185,7 +230,7 @@ body.customer {
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding: var(--space-3) var(--space-4) var(--space-4);
+  padding: var(--space-4) var(--space-5) var(--space-5);
   flex: 1;
 }
 .menu-card .card-name { font-weight: 700; color: var(--color-espresso); }
@@ -235,4 +280,28 @@ body.customer {
 @media (max-width: 480px) {
   .menu-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-3); }
   .menu-card .card-thumb { font-size: 2.6rem; }
+}
+
+/* ============================================================
+   PC 레이아웃 (≥768px): 상단 헤더 네비 표시, 하단 탭바 숨김
+   ============================================================ */
+@media (min-width: 768px) {
+  /* 하단 탭바 공간 제거 (탭바를 숨기므로) */
+  body.customer { padding-bottom: 0; }
+
+  /* 헤더: 브랜드 | 가로 네비(중앙) | 장바구니(우) */
+  .cust-header { gap: var(--space-6); }
+  .header-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    margin-right: auto;
+  }
+
+  /* 하단 탭바 숨김 */
+  .tabbar { display: none; }
+
+  /* 페이지 콘텐츠 상단 여백 확대 */
+  .page { padding: var(--space-6) 0 var(--space-8); }
+  .page-heading h1 { font-size: var(--font-size-3xl); }
 }
