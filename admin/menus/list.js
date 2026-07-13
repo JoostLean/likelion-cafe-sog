@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  const { Store, formatPrice, escapeHtml, toast } = window.CafeUtils;
+  const { Store, formatPrice, escapeHtml, toast, rootPath } = window.CafeUtils;
   window.AdminLayout.render({ active: "menus", title: "메뉴 관리" });
 
   const tbody = document.getElementById("menuTableBody");
@@ -46,6 +46,7 @@
     }
     emptyState.classList.add("hidden");
 
+    const root2 = rootPath();
     tbody.innerHTML = menus
       .map((m) => {
         const cat = categoryMap[m.categoryId];
@@ -55,10 +56,17 @@
         const badges = (m.badges || [])
           .map((b) => `<span class="badge-mini">${escapeHtml(b)}</span>`)
           .join("");
+        const imageSrc = m.imageUrl ? `${root2}${m.imageUrl}` : "";
+        const photo = imageSrc
+          ? `<img src="${imageSrc}" alt="" class="table-thumb-photo" onerror="this.style.display='none'; this.parentElement.classList.add('img-fallback');" />`
+          : "";
         return `
           <tr>
             <td>
-              <div class="table-thumb" style="background:${m.gradient}">${m.emoji}</div>
+              <div class="table-thumb${imageSrc ? "" : " no-photo"}" style="background:${m.gradient}">
+                ${photo}
+                <span class="table-thumb-emoji-fallback">${m.emoji}</span>
+              </div>
             </td>
             <td>
               <div class="menu-name-cell">

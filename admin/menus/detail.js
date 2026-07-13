@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  const { Store, formatPrice, formatDate, escapeHtml, getParam, toast } =
+  const { Store, formatPrice, formatDate, escapeHtml, getParam, toast, rootPath } =
     window.CafeUtils;
   window.AdminLayout.render({ active: "menus", title: "메뉴 상세" });
 
@@ -36,10 +36,18 @@
           .join("")}</span>`
       : `<span class="text-muted">없음</span>`;
 
+  const imageSrc = menu.imageUrl ? `${rootPath()}${menu.imageUrl}` : "";
+  const visualPhoto = imageSrc
+    ? `<img src="${imageSrc}" alt="${escapeHtml(menu.name)}" class="detail-visual-photo" onerror="this.style.display='none'; this.parentElement.classList.add('img-fallback');" />`
+    : "";
+
   root.innerHTML = `
     <div class="section-card">
       <div class="detail-grid">
-        <div class="detail-visual" style="background:${menu.gradient}">${menu.emoji}</div>
+        <div class="detail-visual${imageSrc ? "" : " no-photo"}" style="background:${menu.gradient}">
+          ${visualPhoto}
+          <span class="detail-visual-emoji-fallback">${menu.emoji}</span>
+        </div>
         <div class="detail-info">
           <div class="name-row">
             <h2>${escapeHtml(menu.name)}</h2>

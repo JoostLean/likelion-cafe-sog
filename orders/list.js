@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  const { Store, formatPrice, formatDate, statusBadge, escapeHtml } =
+  const { Store, formatPrice, formatDate, statusBadge, escapeHtml, rootPath } =
     window.CafeUtils;
   window.CustomerLayout.render({ active: "orders" });
 
@@ -24,13 +24,20 @@
     .join("")}</div>`;
 
   function renderCard(o) {
+    const root2 = rootPath();
     // 대표 썸네일 최대 3개
     const thumbs = o.items
       .slice(0, 3)
-      .map(
-        (it) =>
-          `<div class="mini-thumb" style="background:var(--color-cream)">${it.emoji}</div>`
-      )
+      .map((it) => {
+        const imageSrc = it.imageUrl ? `${root2}${it.imageUrl}` : "";
+        const photo = imageSrc
+          ? `<img src="${imageSrc}" alt="" class="mini-thumb-photo" onerror="this.style.display='none'; this.parentElement.classList.add('img-fallback');" />`
+          : "";
+        return `<div class="mini-thumb${imageSrc ? "" : " no-photo"}" style="background:var(--color-cream)">
+            ${photo}
+            <span class="mini-thumb-emoji-fallback">${it.emoji}</span>
+          </div>`;
+      })
       .join("");
 
     const firstName = escapeHtml(o.items[0].name);

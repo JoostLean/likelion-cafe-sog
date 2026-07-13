@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  const { Store, formatPrice, escapeHtml, getParam, toast } = window.CafeUtils;
+  const { Store, formatPrice, escapeHtml, getParam, toast, rootPath } = window.CafeUtils;
   window.CustomerLayout.render({ active: "menus" });
 
   const root = document.getElementById("detailRoot");
@@ -26,9 +26,15 @@
     .map((b) => `<span class="detail-badge">${escapeHtml(b)}</span>`)
     .join("");
 
+  const imageSrc = menu.imageUrl ? `${rootPath()}${menu.imageUrl}` : "";
+  const heroPhoto = imageSrc
+    ? `<img src="${imageSrc}" alt="${escapeHtml(menu.name)}" class="detail-photo" onerror="this.style.display='none'; this.parentElement.classList.add('img-fallback');" />`
+    : "";
+
   root.innerHTML = `
-    <div class="detail-hero" style="background:${menu.gradient}">
-      ${menu.emoji}
+    <div class="detail-hero${imageSrc ? "" : " no-photo"}" style="background:${menu.gradient}">
+      ${heroPhoto}
+      <span class="detail-emoji-fallback">${menu.emoji}</span>
       ${menu.soldOut ? `<div class="soldout-overlay">품절</div>` : ""}
     </div>
     <div class="detail-body">

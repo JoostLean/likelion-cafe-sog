@@ -52,12 +52,12 @@
 
 /* ---------- 섹션 카드 ---------- */
 .order-section {
-  padding: var(--space-5);
+  padding: var(--space-6);
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  margin-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
 }
 .order-section h3 {
   font-size: var(--font-size-base);
@@ -80,7 +80,19 @@
   display: flex; align-items: center; justify-content: center;
   font-size: 1.4rem;
   flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
 }
+.order-item-row .row-thumb .row-thumb-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.order-item-row .row-thumb .row-thumb-emoji-fallback { display: none; }
+.order-item-row .row-thumb.img-fallback .row-thumb-emoji-fallback,
+.order-item-row .row-thumb.no-photo .row-thumb-emoji-fallback { display: block; position: relative; z-index: 0; }
 .order-item-row .row-info { flex: 1; }
 .order-item-row .row-name { font-weight: 600; }
 .order-item-row .row-qty { font-size: var(--font-size-sm); color: var(--color-text-muted); }
@@ -107,3 +119,9 @@
 .order-meta-row .label { color: var(--color-text-muted); }
 
 .order-actions { display: flex; gap: var(--space-3); margin-top: var(--space-2); }
+
+/* ---------- PC 레이아웃 (≥768px): 읽기 편한 폭으로 중앙 정렬 ---------- */
+@media (min-width: 768px) {
+  #detailRoot { max-width: 680px; margin-inline: auto; }
+  .status-steps { margin-bottom: var(--space-6); }
+}

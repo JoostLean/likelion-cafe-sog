@@ -24,3 +24,24 @@
   flex-direction: column;
   flex: 1;
 }
+
+/* ---------- PC 레이아웃 (≥768px) ---------- */
+@media (min-width: 768px) {
+  /* 검색창 + 카테고리 칩을 한 줄로 */
+  .menu-filter {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-4);
+  }
+  .menu-filter .input { max-width: 280px; }
+  /* 데스크톱에선 칩 가로 스크롤 대신 자연스럽게 줄바꿈 */
+  .chip-scroll {
+    overflow-x: visible;
+    margin-inline: 0;
+    padding-inline: 0;
+    flex: 1;
+  }
+  .chip-scroll .chip-group { flex-wrap: wrap; }
+  /* 카드 최소 폭을 키워 여백 확보 */
+  .menu-grid { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: var(--space-6); }
+}

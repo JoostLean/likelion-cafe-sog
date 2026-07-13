@@ -39,21 +39,34 @@
       form.price.value = menu.price ?? "";
       form.description.value = menu.description || "";
       form.emoji.value = menu.emoji || "";
+      form.imageUrl.value = menu.imageUrl || "";
       form.gradient.value = menu.gradient || GRADIENTS[1].value;
       form.badges.value = (menu.badges || []).join(", ");
       form.soldOut.checked = !!menu.soldOut;
     },
 
-    /* 실시간 미리보기 바인딩 */
+    /* 실시간 미리보기 바인딩 (이미지 URL 있으면 이미지, 없으면 이모지+그라디언트) */
     bindPreview(form) {
+      const { rootPath } = window.CafeUtils;
       const thumb = document.getElementById("previewThumb");
       const update = () => {
-        thumb.textContent = form.emoji.value.trim() || "☕";
-        thumb.style.background =
-          form.gradient.value || GRADIENTS[1].value;
+        const url = form.imageUrl.value.trim();
+        thumb.style.background = form.gradient.value || GRADIENTS[1].value;
+        if (url) {
+          const src = /^https?:\/\//.test(url) ? url : `${rootPath()}${url}`;
+          thumb.innerHTML = `<img src="${src}" alt="" class="preview-photo" />`;
+          const img = thumb.querySelector("img");
+          img.onerror = () => {
+            img.remove();
+            thumb.textContent = form.emoji.value.trim() || "☕";
+          };
+        } else {
+          thumb.textContent = form.emoji.value.trim() || "☕";
+        }
       };
       form.emoji.addEventListener("input", update);
       form.gradient.addEventListener("change", update);
+      form.imageUrl.addEventListener("input", update);
       update();
     },
 
@@ -84,6 +97,7 @@
         price,
         description: form.description.value.trim(),
         emoji: form.emoji.value.trim() || "☕",
+        imageUrl: form.imageUrl.value.trim(),
         gradient: form.gradient.value || GRADIENTS[1].value,
         badges: form.badges.value
           .split(",")

@@ -26,11 +26,17 @@
         ? `<button class="card-add" disabled aria-label="품절">+</button>`
         : `<button class="card-add js-add" data-id="${menu.id}" aria-label="장바구니 담기">+</button>`;
 
+      const imageSrc = menu.imageUrl ? `${root}${menu.imageUrl}` : "";
+      const thumbInner = imageSrc
+        ? `<img src="${imageSrc}" alt="${escapeHtml(menu.name)}" class="card-photo" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('img-fallback');" />`
+        : "";
+
       return `
         <article class="menu-card${menu.soldOut ? " is-soldout" : ""}">
           <a href="${detailHref}" class="card-link">
             <div class="card-thumb" style="background:${menu.gradient}">
-              ${menu.emoji}
+              ${thumbInner}
+              <span class="card-emoji-fallback">${menu.emoji}</span>
               ${soldOutOverlay}
               ${badges ? `<div class="card-badges">${badges}</div>` : ""}
             </div>

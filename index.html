@@ -11,46 +11,73 @@
 <body>
   <header class="cust-header"></header>
 
-  <main class="container page">
-    <!-- 히어로 -->
-    <section class="hero">
-      <div class="hero-text">
-        <p class="hero-eyebrow">☕ SOG CAFE</p>
-        <h1 class="hero-title">오늘도<br />따뜻한 한 잔</h1>
-        <p class="hero-sub">정성껏 내린 커피와 달콤한 디저트를<br />간편하게 주문하세요.</p>
-        <a href="menus/list.html" class="btn btn-primary hero-cta">메뉴 주문하기 →</a>
-      </div>
-      <div class="hero-visual" aria-hidden="true">
-        <span class="hero-emoji">☕</span>
-      </div>
-    </section>
+  <!-- 히어로: 풀블리드 이미지 -->
+  <section class="hero">
+    <img src="assets/hero-main.jpg" alt="" class="hero-bg" />
+    <div class="hero-scrim"></div>
+    <div class="hero-content container">
+      <span class="overline">SOG CAFE</span>
+      <h1 class="hero-title display-font">오늘도,<br />따뜻한 한 잔</h1>
+      <p class="hero-sub">정성껏 내린 커피와 계절의 디저트로<br />하루의 쉼표를 만듭니다.</p>
+      <a href="menus/list.html" class="btn btn-primary hero-cta">메뉴 주문하기 →</a>
+    </div>
+    <div class="hero-scroll-cue">Scroll ↓</div>
+  </section>
 
+  <main>
     <!-- 카테고리 바로가기 -->
-    <section class="home-section">
+    <section class="home-section container">
       <div class="section-head">
-        <h2>카테고리</h2>
+        <span class="overline">Categories</span>
+        <h2 class="display-font">카테고리별로 골라보세요</h2>
       </div>
       <div id="categoryNav" class="category-nav"></div>
     </section>
 
+    <!-- 매장 소개 (에디토리얼 이미지 섹션) -->
+    <section class="intro-section">
+      <div class="intro-media">
+        <img src="assets/hero-interior.jpg" alt="SOG Cafe 매장 내부" />
+      </div>
+      <div class="intro-copy container-narrow">
+        <span class="overline">Cafe Introduction</span>
+        <h2 class="display-font">머무는 순간이<br />특별해지는 공간</h2>
+        <p>
+          좋은 원두와 정성스러운 레시피, 그리고 편안한 공간.
+          SOG Cafe는 바쁜 하루 속에서도 잠시 멈춰 쉴 수 있는
+          작은 쉼표가 되고자 합니다.
+        </p>
+        <a href="menus/list.html" class="btn btn-outline">메뉴 둘러보기</a>
+      </div>
+    </section>
+
     <!-- 추천 메뉴 -->
-    <section class="home-section">
-      <div class="section-head">
-        <h2>🔥 인기 메뉴</h2>
+    <section class="home-section container">
+      <div class="section-head row">
+        <div>
+          <span class="overline">Best Menu</span>
+          <h2 class="display-font">인기 메뉴</h2>
+        </div>
         <a href="menus/list.html" class="section-more">전체보기 ›</a>
       </div>
       <div id="popularGrid" class="menu-grid"></div>
     </section>
 
     <!-- 신메뉴 -->
-    <section class="home-section">
-      <div class="section-head">
-        <h2>✨ 신메뉴</h2>
+    <section class="home-section container">
+      <div class="section-head row">
+        <div>
+          <span class="overline">New Arrival</span>
+          <h2 class="display-font">신메뉴</h2>
+        </div>
         <a href="menus/list.html" class="section-more">전체보기 ›</a>
       </div>
       <div id="newGrid" class="menu-grid"></div>
     </section>
   </main>
+
+  <footer class="site-footer"></footer>
+
 
   <nav class="tabbar"></nav>
 

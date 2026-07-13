@@ -1,11 +1,13 @@
 /* ============================================================
    variables.css — 전역 CSS 변수 & 리셋
-   테마: 라이트 + 따뜻한 브라운/크림 톤 / 미니멀 모던 / Glass morphism
+   테마: 에디토리얼 카페 브랜드 톤 — 딥 에스프레소 다크 + 크림
+   레퍼런스: 대형 풀블리드 히어로, 넉넉한 여백, 세리프+산세리프 조합
    ============================================================ */
 
 :root {
   /* ---------- 컬러: 브라운/크림 톤 ---------- */
-  --color-espresso: #3b2a20;   /* 가장 진한 브라운 (텍스트/헤딩) */
+  --color-espresso: #2a1d16;   /* 가장 진한 브라운 (텍스트/헤딩/다크 섹션) */
+  --color-espresso-deep: #1c130d; /* 푸터/히어로 오버레이용 초다크 */
   --color-coffee: #6f4e37;     /* 메인 브라운 (버튼/포인트) */
   --color-coffee-light: #8a6d54;
   --color-caramel: #b07d52;    /* 보조 포인트 */
@@ -40,23 +42,27 @@
   --status-canceled-bg: #f3dcd8;
   --status-canceled-fg: #a53f30;
 
-  /* ---------- Glass morphism ---------- */
-  --glass-bg: rgba(255, 253, 249, 0.65);
+  /* ---------- Glass morphism (톤 낮춰 절제된 사용) ---------- */
+  --glass-bg: rgba(255, 253, 249, 0.72);
   --glass-border: rgba(255, 255, 255, 0.55);
   --glass-blur: 14px;
 
-  /* ---------- 타이포그래피 ---------- */
+  /* ---------- 타이포그래피 ----------
+     Pretendard 단일 폰트로 통일 (본문/제목 모두). --font-serif는 하위 호환용 별칭. */
   --font-sans: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI",
     "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-serif: var(--font-sans);
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
   --font-size-lg: 1.125rem;
-  --font-size-xl: 1.375rem;
-  --font-size-2xl: 1.75rem;
-  --font-size-3xl: 2.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 2.75rem;
+  --font-size-4xl: 3.75rem;
+  --font-size-5xl: 5rem;
 
-  /* ---------- 간격 ---------- */
+  /* ---------- 간격 (넉넉한 여백 스케일) ---------- */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -64,6 +70,9 @@
   --space-5: 1.5rem;
   --space-6: 2rem;
   --space-8: 3rem;
+  --space-10: 4.5rem;
+  --space-12: 6rem;
+  --space-16: 8rem;
 
   /* ---------- 라운드 ---------- */
   --radius-sm: 8px;
@@ -72,13 +81,14 @@
   --radius-full: 999px;
 
   /* ---------- 그림자 ---------- */
-  --shadow-sm: 0 1px 3px rgba(59, 42, 32, 0.08);
-  --shadow-md: 0 6px 18px rgba(59, 42, 32, 0.1);
-  --shadow-lg: 0 14px 40px rgba(59, 42, 32, 0.14);
+  --shadow-sm: 0 1px 3px rgba(42, 29, 22, 0.08);
+  --shadow-md: 0 6px 18px rgba(42, 29, 22, 0.1);
+  --shadow-lg: 0 14px 40px rgba(42, 29, 22, 0.14);
 
-  /* ---------- 레이아웃 ---------- */
-  --container-max: 1120px;
-  --header-height: 64px;
+  /* ---------- 레이아웃 (넓은 컨테이너) ---------- */
+  --container-max: 1320px;
+  --container-narrow: 760px;
+  --header-height: 76px;
   --transition: 0.2s ease;
 }
 
@@ -104,11 +114,7 @@ body {
   font-size: var(--font-size-base);
   line-height: 1.6;
   color: var(--color-text);
-  background:
-    radial-gradient(circle at 12% 18%, rgba(176, 125, 82, 0.12), transparent 42%),
-    radial-gradient(circle at 88% 8%, rgba(200, 162, 124, 0.14), transparent 40%),
-    var(--color-bg);
-  background-attachment: fixed;
+  background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -145,9 +151,28 @@ ol {
 }
 
 h1, h2, h3, h4 {
-  line-height: 1.25;
+  line-height: 1.2;
   color: var(--color-espresso);
   font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- 에디토리얼 오버라인 라벨 (레퍼런스: NOTICE, CAFE INTRODUCTION 등) ---------- */
+.overline {
+  display: block;
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-caramel);
+  margin-bottom: var(--space-3);
+}
+
+/* ---------- 에디토리얼 타이틀 (Pretendard 굵은 웨이트) ---------- */
+.display-font {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
 /* ============================================================
@@ -157,7 +182,14 @@ h1, h2, h3, h4 {
   width: 100%;
   max-width: var(--container-max);
   margin-inline: auto;
-  padding-inline: var(--space-5);
+  padding-inline: var(--space-6);
+}
+
+.container-narrow {
+  width: 100%;
+  max-width: var(--container-narrow);
+  margin-inline: auto;
+  padding-inline: var(--space-6);
 }
 
 .glass {
@@ -265,6 +297,21 @@ h1, h2, h3, h4 {
   user-select: none;
 }
 
+/* ---------- 칩(필터 토글) — 전역: 고객/관리자 공유 ---------- */
+.chip-group { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+.chip {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  transition: var(--transition);
+}
+.chip:hover { border-color: var(--color-coffee); color: var(--color-coffee); }
+.chip.active { background: var(--color-coffee); border-color: var(--color-coffee); color: #fff; }
+
 /* ---------- 주문 상태 배지 (전역: 고객/관리자 공유) ---------- */
 .status-pending { background: var(--status-pending-bg); color: var(--status-pending-fg); }
 .status-progress { background: var(--status-progress-bg); color: var(--status-progress-fg); }
@@ -290,6 +337,97 @@ h1, h2, h3, h4 {
   color: var(--color-text-muted);
 }
 .empty-state .empty-icon { font-size: 3rem; margin-bottom: var(--space-3); }
+
+/* ============================================================
+   다크 푸터 (전역: 고객/관리자 공유)
+   레퍼런스: 진한 배경 + 로고 + 링크 + SNS + 저작권
+   ============================================================ */
+.site-footer {
+  background: var(--color-espresso-deep);
+  color: rgba(243, 233, 221, 0.75);
+  margin-top: var(--space-12);
+}
+.site-footer .footer-inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding: var(--space-10) var(--space-6) var(--space-6);
+}
+.site-footer .footer-top {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: var(--space-8);
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid rgba(243, 233, 221, 0.14);
+}
+.site-footer .footer-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: var(--space-3);
+}
+.site-footer .footer-desc {
+  font-size: var(--font-size-sm);
+  line-height: 1.7;
+  max-width: 340px;
+  color: rgba(243, 233, 221, 0.6);
+}
+.site-footer .footer-col h4 {
+  color: #fff;
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-4);
+}
+.site-footer .footer-col ul { display: flex; flex-direction: column; gap: var(--space-3); }
+.site-footer .footer-col a,
+.site-footer .footer-col li {
+  font-size: var(--font-size-sm);
+  color: rgba(243, 233, 221, 0.68);
+  transition: var(--transition);
+}
+.site-footer .footer-col a:hover { color: #fff; }
+
+.site-footer .footer-social {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+.site-footer .footer-social a {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(243, 233, 221, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  transition: var(--transition);
+}
+.site-footer .footer-social a:hover {
+  background: rgba(243, 233, 221, 0.12);
+  border-color: rgba(243, 233, 221, 0.4);
+}
+
+.site-footer .footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  padding-top: var(--space-5);
+  font-size: var(--font-size-xs);
+  color: rgba(243, 233, 221, 0.45);
+}
+
+@media (max-width: 720px) {
+  .site-footer .footer-top { grid-template-columns: 1fr; gap: var(--space-6); }
+  .site-footer .footer-bottom { flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+}
 
 /* ---------- 토스트 ---------- */
 .toast-container {
