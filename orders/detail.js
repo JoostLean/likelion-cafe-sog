@@ -13,7 +13,6 @@
     ORDER_STATUS,
     rootPath,
   } = window.CafeUtils;
-  window.CustomerLayout.render({ active: "orders" });
 
   const root = document.getElementById("detailRoot");
   const id = getParam("id");
@@ -28,8 +27,8 @@
   /* 진행 단계 순서 */
   const STEP_ORDER = ["pending", "progress", "done"];
 
-  function render() {
-    const order = id ? Store.getOrder(id) : null;
+  async function render() {
+    const order = id ? await Store.getOrder(id) : null;
 
     if (!order) {
       root.innerHTML = `
@@ -120,14 +119,17 @@
   }
 
   /* 취소 (접수 대기 상태에서만) */
-  root.addEventListener("click", (e) => {
+  root.addEventListener("click", async (e) => {
     if (!e.target.closest(".js-cancel")) return;
     if (confirm("주문을 취소하시겠습니까?")) {
-      Store.updateOrderStatus(id, "canceled");
+      await Store.updateOrderStatus(id, "canceled");
       toast("주문이 취소되었습니다.");
-      render();
+      await render();
     }
   });
 
-  render();
+  (async function init() {
+    await window.CustomerLayout.render({ active: "orders" });
+    await render();
+  })();
 })();

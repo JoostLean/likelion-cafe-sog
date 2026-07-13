@@ -2,13 +2,23 @@
 (function () {
   "use strict";
 
-  const { Store, formatPrice, escapeHtml, toast, rootPath } = window.CafeUtils;
-  window.CustomerLayout.render({ active: "basket" });
+  const { Store, Auth, formatPrice, escapeHtml, toast, rootPath } =
+    window.CafeUtils;
 
   const root = document.getElementById("basketRoot");
+  const rp = rootPath();
 
-  function render() {
-    const items = Store.getCartDetailed();
+  function renderLoginNeeded() {
+    root.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔒</div>
+        <p>로그인 후 장바구니를 이용할 수 있습니다.</p>
+        <a href="${rp}my/index.html" class="btn btn-primary" style="margin-top:1rem">로그인하러 가기</a>
+      </div>`;
+  }
+
+  async function render() {
+    const items = await Store.getCartDetailed();
 
     if (items.length === 0) {
       root.innerHTML = `
@@ -20,12 +30,12 @@
       return;
     }
 
-    const total = Store.cartTotal();
+    const total = items.reduce((s, it) => s + it.lineTotal, 0);
+    const count = items.reduce((s, it) => s + it.qty, 0);
 
-    const root2 = rootPath();
     const itemsHtml = items
       .map((it) => {
-        const imageSrc = it.menu.imageUrl ? `${root2}${it.menu.imageUrl}` : "";
+        const imageSrc = it.menu.imageUrl ? `${rp}${it.menu.imageUrl}` : "";
         const thumbInner = imageSrc
           ? `<img src="${imageSrc}" alt="${escapeHtml(it.menu.name)}" class="thumb-photo" loading="lazy" onerror="this.style.display='none'; this.parentElement.classList.add('img-fallback');" />`
           : "";
@@ -60,7 +70,7 @@
           <h2>주문 요약</h2>
           <div class="summary-row">
             <span>상품 수</span>
-            <span>${Store.cartCount()}개</span>
+            <span>${count}개</span>
           </div>
           <div class="summary-total">
             <span>총 결제금액</span>
@@ -76,40 +86,49 @@
       </div>`;
   }
 
+  async function afterCartChange() {
+    await render();
+    await window.CustomerLayout.refreshCartBadge();
+  }
+
   /* ---------- 이벤트 위임 ---------- */
-  root.addEventListener("click", (e) => {
+  root.addEventListener("click", async (e) => {
     const itemEl = e.target.closest(".basket-item");
 
-    // 수량 증가/감소
+    // 수량 증가
     if (e.target.closest(".js-plus") && itemEl) {
       const id = itemEl.dataset.id;
-      const item = Store.getCart().find((i) => i.menuId === id);
-      Store.updateCartQty(id, item.qty + 1);
-      afterCartChange();
+      const cart = await Store.getCart();
+      const item = cart.find((i) => i.menuId === id);
+      if (item) await Store.updateCartQty(id, item.qty + 1);
+      await afterCartChange();
       return;
     }
+    // 수량 감소
     if (e.target.closest(".js-minus") && itemEl) {
       const id = itemEl.dataset.id;
-      const item = Store.getCart().find((i) => i.menuId === id);
+      const cart = await Store.getCart();
+      const item = cart.find((i) => i.menuId === id);
+      if (!item) return;
       if (item.qty <= 1) {
-        Store.removeFromCart(id);
+        await Store.removeFromCart(id);
       } else {
-        Store.updateCartQty(id, item.qty - 1);
+        await Store.updateCartQty(id, item.qty - 1);
       }
-      afterCartChange();
+      await afterCartChange();
       return;
     }
     // 삭제
     if (e.target.closest(".js-remove") && itemEl) {
-      Store.removeFromCart(itemEl.dataset.id);
-      afterCartChange();
+      await Store.removeFromCart(itemEl.dataset.id);
+      await afterCartChange();
       return;
     }
     // 비우기
     if (e.target.closest(".js-clear")) {
-      if (Store.cartCount() > 0 && confirm("장바구니를 비우시겠습니까?")) {
-        Store.clearCart();
-        afterCartChange();
+      if ((await Store.cartCount()) > 0 && confirm("장바구니를 비우시겠습니까?")) {
+        await Store.clearCart();
+        await afterCartChange();
         toast("장바구니를 비웠습니다.");
       }
       return;
@@ -117,12 +136,18 @@
     // 주문하기
     if (e.target.closest(".js-order")) {
       const memo = (document.getElementById("memo")?.value || "").trim();
-      const order = Store.createOrder({ memo });
+      let order;
+      try {
+        order = await Store.createOrder({ memo });
+      } catch (err) {
+        toast("주문에 실패했습니다. 다시 시도해주세요.");
+        return;
+      }
       if (!order) {
         toast("장바구니가 비어 있습니다.");
         return;
       }
-      window.CustomerLayout.refreshCartBadge();
+      await window.CustomerLayout.refreshCartBadge();
       toast("주문이 완료되었습니다!");
       setTimeout(() => {
         location.href = `../orders/detail.html?id=${order.id}`;
@@ -131,10 +156,12 @@
     }
   });
 
-  function afterCartChange() {
-    render();
-    window.CustomerLayout.refreshCartBadge();
-  }
-
-  render();
+  (async function init() {
+    await window.CustomerLayout.render({ active: "basket" });
+    if (!(await Auth.isLoggedIn())) {
+      renderLoginNeeded();
+      return;
+    }
+    await render();
+  })();
 })();

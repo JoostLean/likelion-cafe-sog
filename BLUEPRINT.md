@@ -71,8 +71,8 @@ cafe-app/
 │   ├── css/
 │   │   └── variables.css             # CSS 변수 (전역)
 │   └── js/
-│       ├── data.js                   # 메뉴/카테고리 데이터
-│       └── utils.js                  # 공통 유틸리티
+│       ├── supabase.js               # Supabase 클라이언트 초기화
+│       └── utils.js                  # 공통 유틸(Store/Auth = Supabase DAO, async)
 ```
 
 ## 👥 역할별 기능
@@ -95,6 +95,23 @@ cafe-app/
 - **파일명은 HTML 파일명과 동일하게 매칭** (`index.html` → `index.css`, `index.js`)
 - 전역 공통 자원만 `/css/`, `/js/` 폴더에 분리
 - 역할별 독립 폴더로 관심사를 분리
+
+---
+
+## 🔌 백엔드 (Supabase)
+
+- **프로젝트**: `fkxlwxdvmwkpiqzsgqxa` · URL `https://fkxlwxdvmwkpiqzsgqxa.supabase.co`
+- **인증**: 이메일 + 비밀번호 (Supabase Auth). 회원가입 시 `profiles` 자동 생성(트리거).
+- **권한**: `profiles.role`(`customer`/`admin`). `is_admin()` 헬퍼 + RLS로 관리자 기능 보호.
+  일반 사용자의 role 상승은 `prevent_role_escalation` 트리거가 차단.
+- **테이블**: `categories`, `menus`, `cart_items`(유저별), `orders`, `order_items`. 전부 RLS 활성화.
+- **데이터 접근**: 모든 페이지는 `CafeUtils.Store.*` / `CafeUtils.Auth.*` (async) 만 사용.
+  Supabase 클라이언트를 페이지에서 직접 호출하지 않음.
+- **테스트 계정**:
+  - 관리자 `admin@cafesog.com` / `admin1234`
+  - 고객 `customer@cafesog.com` / `test1234`
+- ⚠️ **대시보드 설정 필요**: Authentication → Providers → Email 의 "Confirm email" 을
+  끄면 회원가입 직후 바로 로그인 가능(데모 권장). 켜져 있으면 이메일 인증 링크 필요.
 
 ---
 
