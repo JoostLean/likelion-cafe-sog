@@ -1,0 +1,71 @@
+/* admin/orders/detail.css — 관리자 주문 상세 */
+
+.order-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-5);
+  align-items: start;
+}
+
+.section-card + .section-card { margin-top: var(--space-4); }
+.section-card h3 {
+  font-size: var(--font-size-base);
+  margin-bottom: var(--space-4);
+  color: var(--color-text-muted);
+}
+
+/* 주문 항목 */
+.o-item-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.o-item-row:last-child { border-bottom: none; }
+.o-item-row .o-thumb {
+  width: 44px; height: 44px; border-radius: var(--radius-sm);
+  background: var(--color-cream);
+  display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+}
+.o-item-row .o-info { flex: 1; }
+.o-item-row .o-name { font-weight: 600; }
+.o-item-row .o-qty { font-size: var(--font-size-sm); color: var(--color-text-muted); }
+.o-item-row .o-price { font-weight: 700; color: var(--color-coffee); }
+
+.o-total-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  padding-top: var(--space-4); margin-top: var(--space-2);
+  border-top: 2px solid var(--color-border); font-weight: 700;
+}
+.o-total-row .val { font-size: var(--font-size-xl); color: var(--color-coffee); }
+
+.o-meta-row { display: flex; justify-content: space-between; padding: var(--space-2) 0; font-size: var(--font-size-sm); }
+.o-meta-row .label { color: var(--color-text-muted); }
+
+/* 상태 변경 패널 */
+.status-panel { position: sticky; top: calc(var(--header-height) + var(--space-6)); }
+.current-status {
+  display: flex; align-items: center; gap: var(--space-3);
+  padding: var(--space-4); margin-bottom: var(--space-4);
+  border-radius: var(--radius-md); background: var(--color-cream-soft);
+}
+.current-status .cs-emoji { font-size: 1.8rem; }
+.current-status .cs-label { font-size: var(--font-size-xs); color: var(--color-text-muted); }
+
+.status-actions { display: flex; flex-direction: column; gap: var(--space-2); }
+.status-btn {
+  display: flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border); border-radius: var(--radius-sm);
+  font-weight: 600; font-size: var(--font-size-sm);
+  transition: var(--transition); text-align: left;
+}
+.status-btn:hover { border-color: var(--color-coffee); background: var(--color-cream-soft); }
+.status-btn.is-current { background: var(--color-coffee); color: #fff; border-color: var(--color-coffee); }
+.status-btn.is-current:hover { background: var(--color-primary-hover); }
+
+@media (max-width: 860px) {
+  .order-detail-grid { grid-template-columns: 1fr; }
+  .status-panel { position: static; }
+}

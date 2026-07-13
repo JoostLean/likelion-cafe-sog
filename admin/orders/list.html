@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>주문 관리 · SOG Cafe 관리자</title>
+  <link rel="stylesheet" href="../../css/variables.css" />
+  <link rel="stylesheet" href="../../css/admin.css" />
+  <link rel="stylesheet" href="list.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar"></aside>
+    <div class="admin-main">
+      <header class="admin-header"></header>
+      <main class="admin-content">
+
+        <div class="admin-toolbar">
+          <div class="admin-breadcrumb">주문 관리</div>
+        </div>
+
+        <div class="filter-bar">
+          <div class="chip-group" id="statusChips"></div>
+        </div>
+
+        <div class="section-card">
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>주문번호</th>
+                  <th>주문자</th>
+                  <th>메뉴</th>
+                  <th>금액</th>
+                  <th>주문일시</th>
+                  <th>상태</th>
+                  <th>관리</th>
+                </tr>
+              </thead>
+              <tbody id="orderTableBody"></tbody>
+            </table>
+          </div>
+          <div id="emptyState" class="empty-state hidden">
+            <div class="empty-icon">🧾</div>
+            <p>조건에 맞는 주문이 없습니다.</p>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../../js/data.js"></script>
+  <script src="../../js/utils.js"></script>
+  <script src="../../js/admin.js"></script>
+  <script src="list.js"></script>
+</body>
+</html>

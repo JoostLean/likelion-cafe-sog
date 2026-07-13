@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>대시보드 · SOG Cafe 관리자</title>
+  <link rel="stylesheet" href="../css/variables.css" />
+  <link rel="stylesheet" href="../css/admin.css" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar"></aside>
+    <div class="admin-main">
+      <header class="admin-header"></header>
+      <main class="admin-content">
+
+        <div class="admin-toolbar">
+          <div class="admin-breadcrumb">대시보드</div>
+        </div>
+
+        <!-- 통계 카드 -->
+        <div id="statGrid" class="stat-grid"></div>
+
+        <div class="dashboard-cols">
+          <!-- 최근 주문 -->
+          <section class="section-card">
+            <div class="card-head">
+              <h2>최근 주문</h2>
+              <a href="orders/list.html" class="section-more">전체보기 ›</a>
+            </div>
+            <div class="data-table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>주문번호</th><th>주문자</th><th>금액</th><th>상태</th><th></th></tr>
+                </thead>
+                <tbody id="recentOrdersBody"></tbody>
+              </table>
+            </div>
+            <div id="recentEmpty" class="empty-state hidden">
+              <div class="empty-icon">🧾</div><p>주문이 없습니다.</p>
+            </div>
+          </section>
+
+          <!-- 인기 메뉴 TOP -->
+          <section class="section-card">
+            <div class="card-head">
+              <h2>많이 팔린 메뉴</h2>
+            </div>
+            <ol id="topMenus" class="top-menu-list"></ol>
+            <div id="topEmpty" class="empty-state hidden">
+              <div class="empty-icon">📊</div><p>판매 데이터가 없습니다.</p>
+            </div>
+          </section>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/utils.js"></script>
+  <script src="../js/admin.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>
