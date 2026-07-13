@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>메뉴 수정 · SOG Cafe 관리자</title>
+  <link rel="stylesheet" href="../../css/variables.css" />
+  <link rel="stylesheet" href="../../css/admin.css" />
+  <link rel="stylesheet" href="edit.css" />
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar"></aside>
+    <div class="admin-main">
+      <header class="admin-header"></header>
+      <main class="admin-content">
+
+        <div class="admin-toolbar">
+          <div class="admin-breadcrumb">
+            <a href="list.html">메뉴 관리</a> / 수정
+          </div>
+        </div>
+
+        <div class="section-card form-card" id="formWrap">
+          <form id="menuForm" class="menu-form" novalidate>
+            <div class="form-layout">
+              <div class="form-preview">
+                <div class="preview-thumb" id="previewThumb">☕</div>
+                <p class="preview-hint text-muted">이모지 · 그라디언트 미리보기</p>
+              </div>
+
+              <div class="form-fields">
+                <div class="field">
+                  <label for="name">메뉴명 <span class="req">*</span></label>
+                  <input type="text" id="name" name="name" class="input" required />
+                  <p class="field-error" data-for="name"></p>
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label for="categoryId">카테고리 <span class="req">*</span></label>
+                    <select id="categoryId" name="categoryId" class="select" required></select>
+                  </div>
+                  <div class="field">
+                    <label for="price">가격 (원) <span class="req">*</span></label>
+                    <input type="number" id="price" name="price" class="input" min="0" step="100" required />
+                    <p class="field-error" data-for="price"></p>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="description">설명</label>
+                  <textarea id="description" name="description" class="textarea"></textarea>
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label for="emoji">이모지</label>
+                    <input type="text" id="emoji" name="emoji" class="input" maxlength="4" />
+                  </div>
+                  <div class="field">
+                    <label for="gradient">썸네일 그라디언트</label>
+                    <select id="gradient" name="gradient" class="select"></select>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="badges">배지 (쉼표로 구분)</label>
+                  <input type="text" id="badges" name="badges" class="input" placeholder="인기, 신메뉴" />
+                </div>
+
+                <label class="check-field">
+                  <input type="checkbox" id="soldOut" name="soldOut" />
+                  <span>품절 처리</span>
+                </label>
+
+                <div class="form-actions">
+                  <a href="list.html" class="btn btn-outline">취소</a>
+                  <button type="submit" class="btn btn-primary">변경 저장</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../../js/data.js"></script>
+  <script src="../../js/utils.js"></script>
+  <script src="../../js/admin.js"></script>
+  <script src="_form.js"></script>
+  <script src="edit.js"></script>
+</body>
+</html>
